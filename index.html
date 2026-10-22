@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Links</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+    background: #f1f1f4;
+    color: #1d1d22;
+    font-family: "Inter", system-ui, sans-serif;
+    min-height: 100vh;
+}
+.wrap { max-width: 520px; margin: 0 auto; padding: 28px 16px 36px; }
+
+/* الهيدر (اختياري) */
+.head { text-align: center; margin-bottom: 22px; }
+.head img { width: 160px; max-width: 60%; height: auto; display: block; margin: 0 auto 10px; }
+.head h1 { font-size: 22px; font-weight: 600; letter-spacing: .3px; }
+.head p { margin-top: 4px; font-size: 13px; color: #6b6b75; }
+
+/* الشبكة */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.tile {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    padding: 18px 6px 14px;
+    background: #fff;
+    border: 1px solid #e6e6eb;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(20,20,40,.05);
+    text-decoration: none; color: inherit; cursor: pointer;
+    font-family: inherit;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.tile:active { transform: scale(.96); box-shadow: 0 1px 3px rgba(20,20,40,.1); }
+.ico {
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: #fff;
+}
+.tile span.label { font-size: 12.5px; font-weight: 500; text-align: center; line-height: 1.2; }
+
+/* ألوان الأيقونات */
+.whatsapp { background: #25D366; } .call, .call2 { background: #0a84ff; }
+.facebook { background: #1877F2; }
+.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #df3475 45%, #962fbf 60%, #4f5bd5 90%); }
+.tiktok { background: #000; } .telegram { background: #29a9eb; }
+.linkedin { background: #0a66c2; } .x { background: #000; }
+.behance { background: #0057ff; } .wechat { background: #07c160; }
+.website { background: #3a3a44; }
+.snapchat { background: #FFFC00; color: #fff; }
+.snapchat i { -webkit-text-stroke: 1.3px #111; }
+.instapay { background: linear-gradient(135deg, #7a35c9, #3a1a86); }
+.vodafone { background: #e60000; }
+.reviews { background: #fff; border: 1px solid #e3e3e8; }
+.reviews i { background: linear-gradient(135deg, #EA4335 25%, #FBBC05 25% 50%, #34A853 50% 75%, #4285F4 75%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.address { background: #fff; border: 1px solid #e3e3e8; color: #EA4335; }
+
+.credit { margin-top: 26px; text-align: center; font-size: 12px; color: #8a8a94; }
+.credit a { color: inherit; text-decoration: none; }
+
+.toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 12px);
+    background: #1d1d22; color: #fff; padding: 10px 18px; border-radius: 30px;
+    font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease; z-index: 10;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="head" id="head"></div>
+    <div class="grid" id="grid"></div>
+    <p class="credit" id="credit">Made by <a href="https://wa.me/201127248864" target="_blank" rel="noopener noreferrer">Ahmed Eid</a></p>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Number copied</div>
+
+<script>
+/* =====================================================================
+   الجزء الوحيد اللي بتعدّل فيه: CONFIG
+   - عدّل اللينكات هنا بس. اللي فاضي "" مش هيظهر في الصفحة خالص.
+   - whatsapp و call: اكتب الرقم بس (زي 01029940929)، والتحويل تلقائي.
+   - vodafone: اكتب رقم المحفظة، ولما حد يضغط عليه بيتنسخ.
+   - باقي الحاجات: لينك كامل يبدأ بـ https://
+   ===================================================================== */
+const CONFIG = {
+    title: "",               // اسم العميل اللي فوق (اكتبه هنا)
+    subtitle: "",            // سطر صغير تحت الاسم (اختياري)
+    logo: "",                // مسار اللوجو لو عايزه، مثال: "images/logo.png"
+
+    links: {
+        whatsapp:  "01226229980",
+        call:      "01226229980",
+        call2:     "01124006154",
+        facebook:  "https://www.facebook.com/profile.php?id=61592361192828",
+        instagram: "https://instagram.com/moadm.mamda?mdxt=N3l3MGtra2xmZXZu",
+        tiktok:    "",
+        snapchat:  "",
+        telegram:  "",
+        linkedin:  "",
+        x:         "",
+        behance:   "",
+        instapay:  "https://ipn.eg/S/moadm.mamda00/instapay/7YgVeu",
+        vodafone:  "",
+        wechat:    "",
+        website:   "",
+        reviews:   "",
+        address:   ""
+    }
+};
+/* ===================== آخر الجزء اللي بتعدّل فيه ===================== */
+
+
+/* الأيقونات والأسماء (ما تلمسهاش) */
+const ITEMS = [
+    { key: "whatsapp",  label: "WhatsApp",     icon: "fa-brands fa-whatsapp" },
+    { key: "call",      label: "Call",         icon: "fa-solid fa-phone" },
+    { key: "call2",     label: "Call 2",       icon: "fa-solid fa-phone" },
+    { key: "facebook",  label: "Facebook",     icon: "fa-brands fa-facebook-f" },
+    { key: "instagram", label: "Instagram",    icon: "fa-brands fa-instagram" },
+    { key: "tiktok",    label: "TikTok",       icon: "fa-brands fa-tiktok" },
+    { key: "snapchat",  label: "Snapchat",     icon: "fa-brands fa-snapchat" },
+    { key: "telegram",  label: "Telegram",     icon: "fa-brands fa-telegram" },
+    { key: "linkedin",  label: "LinkedIn",     icon: "fa-brands fa-linkedin-in" },
+    { key: "x",         label: "X",            icon: "fa-brands fa-x-twitter" },
+    { key: "behance",   label: "Behance",      icon: "fa-brands fa-behance" },
+    { key: "instapay",  label: "InstaPay",     icon: "fa-solid fa-bolt" },
+    { key: "vodafone",  label: "Vodafone Cash",icon: "fa-solid fa-quote-right" },
+    { key: "wechat",    label: "WeChat",       icon: "fa-brands fa-weixin" },
+    { key: "website",   label: "Website",      icon: "fa-solid fa-globe" },
+    { key: "reviews",   label: "Reviews",      icon: "fa-brands fa-google" },
+    { key: "address",   label: "Address",      icon: "fa-solid fa-location-dot" }
+];
+
+const isUrl = (v) => /^https?:\/\//i.test(v);
+const digits = (v) => v.replace(/[^\d+]/g, "");
+function waLink(v) {
+    if (isUrl(v)) return v;
+    let n = digits(v);
+    if (n.startsWith("+")) n = n.slice(1);
+    else if (n.startsWith("00")) n = n.slice(2);
+    else if (n.startsWith("0")) n = "20" + n.slice(1);   // رقم مصري
+    return "https://wa.me/" + n;
+}
+
+const toast = document.getElementById("toast");
+function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(showToast.t);
+    showToast.t = setTimeout(() => toast.classList.remove("show"), 1800);
+}
+function copyText(text) {
+    const done = () => showToast("Number copied");
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done).catch(() => fallback());
+    } else fallback();
+    function fallback() {
+        const t = document.createElement("textarea");
+        t.value = text; t.style.position = "fixed"; t.style.opacity = "0";
+        document.body.appendChild(t); t.select();
+        try { document.execCommand("copy"); done(); } catch (e) { showToast(text); }
+        t.remove();
+    }
+}
+
+/* الهيدر */
+const head = document.getElementById("head");
+if (CONFIG.logo) { const i = document.createElement("img"); i.src = CONFIG.logo; i.alt = CONFIG.title || ""; head.appendChild(i); }
+if (CONFIG.title) { const h = document.createElement("h1"); h.textContent = CONFIG.title; head.appendChild(h); document.title = CONFIG.title; }
+if (CONFIG.subtitle) { const p = document.createElement("p"); p.textContent = CONFIG.subtitle; head.appendChild(p); }
+if (!head.children.length) head.remove();
+
+/* الكروت */
+const grid = document.getElementById("grid");
+ITEMS.forEach((it) => {
+    const raw = (CONFIG.links[it.key] || "").trim();
+    if (!raw) return;                                   // فاضي = مايظهرش
+
+    let el;
+    if (it.key === "vodafone" && !isUrl(raw)) {         // رقم محفظة = نسخ
+        el = document.createElement("button");
+        el.type = "button";
+        el.addEventListener("click", () => copyText(raw));
+    } else {
+        el = document.createElement("a");
+        if (it.key === "whatsapp") el.href = waLink(raw);
+        else if (it.key === "call" || it.key === "call2") el.href = "tel:" + digits(raw);
+        else el.href = raw;
+        if (isUrl(el.href)) { el.target = "_blank"; el.rel = "noopener noreferrer"; }
+    }
+    el.className = "tile";
+    el.innerHTML = '<span class="ico ' + it.key + '"><i class="' + it.icon + '"></i></span><span class="label">' + it.label + '</span>';
+    grid.appendChild(el);
+});
+
+/* لو مفيش credit عايزه تشيله: احذف السطر ده */
+/* document.getElementById("credit").remove(); */
+</script>
+</body>
+</html>
